@@ -34,8 +34,9 @@ STRING2="\/\/ \$cfg\['Servers'\]\[\$i\]\['controlport'\] = '';"
 sudo sed -i -e "s/$STRING1/$STRING2/g" /opt/phpmyadmin/config.inc.php
 
 # Créer le stockage et son utilisateur
-#sudo mysql -u root -p < /opt/phpmyadmin/sql/create_tables.sql
-#sudo mysql -u root -p -e "GRANT SELECT, INSERT, UPDATE, DELETE ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY '$PMAPASS';"
+echo "Entrer le mot de passe root (MySQL) deux fois :"
+mysql -u root -p < /opt/phpmyadmin/sql/create_tables.sql
+mysql -u root -p -e "GRANT SELECT, INSERT, UPDATE, DELETE ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY '$PMAPASS';"
 
 # Ajouter le code des cookies
 COOKIESECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
