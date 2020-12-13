@@ -1,13 +1,8 @@
 #!/bin/bash
 
 # Demander mot de passe root (MySQL)
-echo -n "Tapez votre mot de passe root (MySQL) : "
-trap "stty echo" EXIT HUP INT QUIT
-stty -echo
-read ROOTPASS
-stty echo
-trap - EXIT HUP INT QUIT
-echo "";
+read -sp "Tapez votre mot de passe root (MySQL) : " ROOTPASS
+echo ""
 
 # Télécharger PhpMyAdmin
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-all-languages.zip
