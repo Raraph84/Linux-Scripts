@@ -1,3 +1,14 @@
+#!/bin/bash
+
+# Demander mot de passe root (MySQL)
+echo -n "Tapez votre mot de passe root (MySQL) : "
+trap "stty echo" EXIT HUP INT QUIT
+stty -echo
+read ROOTPASS
+stty echo
+trap - EXIT HUP INT QUIT
+echo "";
+
 # Désactiver la configuration apache2
 sudo a2disconf phpmyadmin.conf > /dev/null
 
@@ -8,8 +19,7 @@ sudo rm -rf /opt/phpmyadmin/ /etc/apache2/conf-available/phpmyadmin.conf /var/li
 sudo systemctl restart apache2
 
 # Supprimer le stockage MySQL
-echo "Entrer le mot de passe root (MySQL) deux fois :"
-mysql -u root -p -e "DROP DATABASE phpmyadmin;"
-mysql -u root -p -e "DROP USER 'pma'@'localhost';"
+mysql --user=root --password=$ROOTPASS -e "DROP DATABASE phpmyadmin;"
+mysql --user=root --password=$ROOTPASS -e "DROP USER 'pma'@'localhost';"
 
 echo "PhpMyAdmin a été déinstallé avec succès !"

@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Demander mot de passe root (MySQL)
+echo -n "Tapez votre mot de passe root (MySQL) : "
+trap "stty echo" EXIT HUP INT QUIT
+stty -echo
+read ROOTPASS
+stty echo
+trap - EXIT HUP INT QUIT
+echo "";
+
 # Télécharger PhpMyAdmin
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-all-languages.zip
 
@@ -34,9 +43,8 @@ STRING2="\/\/ \$cfg\['Servers'\]\[\$i\]\['controlport'\] = '';"
 sudo sed -i -e "s/$STRING1/$STRING2/g" /opt/phpmyadmin/config.inc.php
 
 # Créer le stockage et son utilisateur
-echo "Entrer le mot de passe root (MySQL) deux fois :"
-mysql -u root -p < /opt/phpmyadmin/sql/create_tables.sql
-mysql -u root -p -e "GRANT SELECT, INSERT, UPDATE, DELETE ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY '$PMAPASS';"
+mysql --user=root --password=$ROOTPASS < /opt/phpmyadmin/sql/create_tables.sql
+mysql --user=root --password=$ROOTPASS -e "GRANT SELECT, INSERT, UPDATE, DELETE ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY '$PMAPASS';"
 
 # Ajouter le code des cookies
 COOKIESECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
