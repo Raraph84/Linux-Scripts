@@ -56,3 +56,5 @@ sudo a2enconf phpmyadmin.conf > /dev/null
 
 # Redémarrer apache2
 sudo systemctl restart apache2
+
+echo "PhpMyAdmin a été installé avec succès !"
