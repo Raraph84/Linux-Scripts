@@ -4,7 +4,7 @@
 if [ "$UID" -ne "0" ]
 then
    echo "Merci de lancer le script en root !"
-   exit 1
+   exit 0
 fi
 
 # Demander mot de passe root (MySQL)
