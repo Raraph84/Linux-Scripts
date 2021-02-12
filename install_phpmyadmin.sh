@@ -58,11 +58,11 @@ sed -i -e "s/$STRING1/$STRING2/g" /opt/phpmyadmin/config.inc.php
 mkdir -p /var/lib/phpmyadmin/tmp
 chown -R www-data:www-data /var/lib/phpmyadmin
 STRING="\n\$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';"
-echo "$STRING" >> /opt/phpmyadmin/config.inc.php
+echo -e "$STRING" >> /opt/phpmyadmin/config.inc.php
 
 # Créer la configuration apache2 et l'activer
 STRING="Alias /phpmyadmin /opt/phpmyadmin\n\n<Directory /opt/phpmyadmin>\n\n  Options FollowSymLinks\n\n  AllowOverride all\n\n  Require all granted\n\n</Directory>"
-echo "$STRING" > /etc/apache2/conf-available/phpmyadmin.conf
+echo -e "$STRING" > /etc/apache2/conf-available/phpmyadmin.conf
 a2enconf phpmyadmin.conf > /dev/null
 
 # Redémarrer apache2
