@@ -11,6 +11,9 @@ fi
 read -sp "Tapez votre mot de passe root (MySQL) : " ROOTPASS
 echo ""
 
+# Installer unzip
+apt install unzip
+
 # Télécharger PhpMyAdmin
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-all-languages.zip
 
