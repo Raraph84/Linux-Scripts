@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Vérifier si le script est lancé en root
-if [ "$UID" -ne "0" ]
-then
+if [ "$UID" -ne "0" ]; then
    echo "Merci de lancer le script en root !"
    exit 0
 fi
