@@ -1,7 +1,4 @@
-# Ces scripts permettent d'installer des logiciels sur linux.
+# Ces scripts permettent d'installer ou de désinstaller PhpMyAdmin sur Linux.
 
-Pour les utiliser, il suffit de les lancer avec `./script.sh`.
-
-Si vous n'arrivez pas à le lancer, essayez ces options :
-- Lancer le script en root (`sudo ./script.sh`)
-- Donnez lui les permissions d'être exécuté (`chmod +x ./script.sh`)
+Pour installer PhpMyAdmin, exécutez `curl -s https://raw.githubusercontent.com/Raraph84/PhpMyAdmin-Installer/master/install_phpmyadmin.sh | sudo bash -s`
+Pour le désintaller, exécutez `curl -s https://raw.githubusercontent.com/Raraph84/PhpMyAdmin-Installer/master/uninstall_phpmyadmin.sh | sudo bash -s`
