@@ -14,16 +14,16 @@ echo ""
 apt install unzip
 
 # Télécharger PhpMyAdmin
-wget -q https://files.phpmyadmin.net/phpMyAdmin/5.1.1/phpMyAdmin-5.1.1-all-languages.zip
+wget -q https://files.phpmyadmin.net/phpMyAdmin/5.1.3/phpMyAdmin-5.1.3-all-languages.zip
 
 # Dézipper
-unzip -q phpMyAdmin-5.1.1-all-languages.zip -d /opt
+unzip -q phpMyAdmin-5.1.3-all-languages.zip -d /opt
 
 # Supprimer l'archive
-rm phpMyAdmin-5.1.1-all-languages.zip
+rm phpMyAdmin-5.1.3-all-languages.zip
 
 # Déplacer et donner les permissions
-mv /opt/phpMyAdmin-5.1.1-all-languages /opt/phpmyadmin
+mv /opt/phpMyAdmin-5.1.3-all-languages /opt/phpmyadmin
 chown -R www-data:www-data /opt/phpmyadmin
 
 # Créer le fichier de configuration
