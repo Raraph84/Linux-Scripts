@@ -6,12 +6,16 @@ if [ "$UID" -ne "0" ]; then
    exit 0
 fi
 
-# Demander mot de passe root (MySQL)
-read -sp "Tapez votre mot de passe root (MySQL) : " ROOTPASS
-echo ""
+if [ -z $1 ]; then
+    read -sp "Tapez votre mot de passe root (MySQL) : " ROOTPASS
+    echo ""
+else
+    ROOTPASS=$1
+fi
 
-# Installer unzip
-apt install unzip
+if ! command -v unzip &> /dev/null; then
+    apt-get install unzip -y
+fi
 
 # Télécharger PhpMyAdmin
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.1.3/phpMyAdmin-5.1.3-all-languages.zip
