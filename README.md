@@ -3,16 +3,16 @@
 ## PhpMyAdmin
 Installation :
 ```
-curl -s https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/install_phpmyadmin.sh | sudo bash
+sudo bash <(curl -Ss https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/install_phpmyadmin.sh)
 ```
 Désinstallation :
 ```
-curl -s https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/uninstall_phpmyadmin.sh | sudo bash
+sudo bash <(curl -Ss https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/uninstall_phpmyadmin.sh)
 ```
 
 ## Pterodactyl
 Installation :  
-⚠ Utiliser seulement sur une machine propre pour éviter tous problèmes
+⚠ Utiliser seulement sur une machine directement installée pour éviter tout problème
 ```
-curl -s https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/pterodacytl_installer.sh | sudo bash
+sudo bash <(curl -Ss https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/pterodacytl_installer.sh)
 ```
