@@ -1,20 +1,28 @@
 #!/bin/bash
 
 if [ "$UID" -ne "0" ]; then
-   echo "Merci de lancer le script en root !"
-   exit 1
+    echo "Please run script with root !"
+    exit 0
 fi
 
-read -sp "Tapez votre mot de passe root (MySQL) : " ROOTPASS
-echo ""
+if [ -z $1 ]; then
+    read -sp "Database root password : " ROOTPASS
+    echo ""
+else
+    ROOTPASS=$1
+fi
+
+if ! echo SELECT 1 | mysql --user=root --password=$ROOTPASS &> /dev/null; then
+    echo "Invalid database root password !"
+    exit 0
+fi
 
 a2disconf phpmyadmin.conf > /dev/null
+systemctl restart apache2
 
 rm -rf /opt/phpmyadmin /etc/apache2/conf-available/phpmyadmin.conf /var/lib/phpmyadmin
-
-systemctl restart apache2
 
 mysql --user=root --password=$ROOTPASS -e "DROP DATABASE phpmyadmin;"
 mysql --user=root --password=$ROOTPASS -e "DROP USER 'pma'@'localhost';"
 
-echo "PhpMyAdmin a été déinstallé avec succès !"
+echo "PhpMyAdmin successfully uninstalled !"

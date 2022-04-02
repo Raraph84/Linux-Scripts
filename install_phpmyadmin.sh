@@ -1,15 +1,20 @@
 #!/bin/bash
 
 if [ "$UID" -ne "0" ]; then
-   echo "Merci de lancer le script en root !"
-   exit 0
+    echo "Please run script with root !"
+    exit 1
 fi
 
 if [ -z $1 ]; then
-    read -sp "Tapez votre mot de passe root (MySQL) : " ROOTPASS
+    read -sp "Database root password : " ROOTPASS
     echo ""
 else
     ROOTPASS=$1
+fi
+
+if ! echo SELECT 1 | mysql --user=root --password=$ROOTPASS &> /dev/null; then
+    echo "Invalid database root password !"
+    exit 1
 fi
 
 apt-get install libapache2-mod-php php-mysql php-mbstring unzip -y
@@ -56,4 +61,4 @@ mysql --user=root --password=$ROOTPASS -e "GRANT SELECT, INSERT, UPDATE, DELETE 
 
 systemctl restart apache2
 
-echo "PhpMyAdmin a été installé avec succès !"
+echo "PhpMyAdmin successfully installed !"
