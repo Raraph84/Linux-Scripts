@@ -11,7 +11,7 @@ curl -s https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/uninstal
 ```
 
 ## Pterodactyl
-Installation :
+Installation :  
 ⚠ Utiliser seulement sur une machine propre pour éviter tous problèmes
 ```
 curl -s https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/pterodacytl_installer.sh | sudo bash
