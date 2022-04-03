@@ -1,6 +1,6 @@
 # Ces scripts permettent d'installer ou de désinstaller certains programmes Linux.
 
-⚠ Script non-idempotent (Flemme de le faire)
+⚠ Scripts non-idempotents (Flemme de le faire)
 
 ## PhpMyAdmin
 Installation :
