@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# /!\ Script non-idempotent (Flemme de le faire)
+
 if [ "$UID" -ne "0" ]; then
     echo "Please run script with root !"
     exit 1
