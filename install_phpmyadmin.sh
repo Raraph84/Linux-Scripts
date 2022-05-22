@@ -19,7 +19,7 @@ fi
 
 echo "--- Installing additionnal packages... ---"
 
-apt-get install libapache2-mod-php php-mysql php-mbstring unzip -y
+apt-get -qq install libapache2-mod-php php-mysql php-mbstring unzip -y
 
 echo "--- Downloading PhpMyAdmin... ---"
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
