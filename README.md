@@ -1,5 +1,7 @@
 # Ces scripts permettent d'installer ou de désinstaller certains programmes Linux.
 
+⚠ Scripts non-idempotents (Flemme de le faire)
+
 ## PhpMyAdmin
 Installation :
 ```
@@ -11,8 +13,7 @@ sudo bash <(curl -Ss https://raw.githubusercontent.com/Raraph84/Linux-Scripts/ma
 ```
 
 ## Pterodactyl
-Installation :  
-⚠ Utiliser seulement sur une machine directement installée pour éviter tout problème
+Installation :
 ```
 sudo bash <(curl -Ss https://raw.githubusercontent.com/Raraph84/Linux-Scripts/master/pterodacytl_installer.sh)
 ```
