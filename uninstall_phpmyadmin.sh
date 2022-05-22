@@ -17,12 +17,15 @@ if ! echo SELECT 1 | mysql --user=root --password=$ROOTPASS &> /dev/null; then
     exit 1
 fi
 
+echo "--- Removing PhpMyAdmin from Apache... ---"
 a2disconf phpmyadmin.conf > /dev/null
 systemctl restart apache2
 
+echo "--- Removing PhpMyAdmin files... ---"
 rm -rf /opt/phpmyadmin /etc/apache2/conf-available/phpmyadmin.conf /var/lib/phpmyadmin
 
+echo "--- Removing PhpMyAdmin databases... ---"
 mysql --user=root --password=$ROOTPASS -e "DROP DATABASE phpmyadmin;"
 mysql --user=root --password=$ROOTPASS -e "DROP USER 'pma'@'localhost';"
 
-echo "PhpMyAdmin successfully uninstalled !"
+echo "--- Uninstallation finished ---"

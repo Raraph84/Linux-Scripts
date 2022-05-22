@@ -198,5 +198,3 @@ echo "Database root password is $ROOTPASS"
 echo "Database pterodactyl password is $PTERODBPASS"
 echo "Email is contact@$DOMAIN and password is $MAILPASS"
 echo "Pterodactyl admin is contact@$DOMAIN and password is $PTEROPASS"
-
-exit 0
