@@ -20,9 +20,9 @@ fi
 apt-get install libapache2-mod-php php-mysql php-mbstring unzip -y
 
 wget -q https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
-unzip -q phpMyAdmin-5.2.0-all-languages.zip -d /opt/phpmyadmin
+unzip -q phpMyAdmin-5.2.0-all-languages.zip -d /opt
+mv /opt/phpMyAdmin-5.2.0-all-languages /opt/phpmyadmin
 rm phpMyAdmin-5.2.0-all-languages.zip
-
 chown -R www-data:www-data /opt/phpmyadmin
 
 cp /opt/phpmyadmin/config.sample.inc.php /opt/phpmyadmin/config.inc.php
