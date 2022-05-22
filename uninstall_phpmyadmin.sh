@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# /!\ Script non-idempotent (Flemme de le faire)
-
 if [ "$UID" -ne "0" ]; then
     echo "Please run script with root !"
-    exit 0
+    exit 1
 fi
 
 if [ -z $1 ]; then
@@ -16,7 +14,7 @@ fi
 
 if ! echo SELECT 1 | mysql --user=root --password=$ROOTPASS &> /dev/null; then
     echo "Invalid database root password !"
-    exit 0
+    exit 1
 fi
 
 a2disconf phpmyadmin.conf > /dev/null
