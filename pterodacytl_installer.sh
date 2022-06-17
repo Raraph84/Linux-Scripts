@@ -5,10 +5,11 @@ help() {
     echo "--help, -h"
     echo "--domainname <Domain name>"
     echo "--nossl"
+    echo "--emailusername <Email address without domain>"
     exit 0
 }
 
-ARGS=$(getopt -o "h" -l "help,domainname:,nossl" -n "$0" -- "$@")
+ARGS=$(getopt -o "h" -l "help,domainname:,nossl,emailusername:" -n "$0" -- "$@")
 
 if [ $? -ne 0 ]; then
     exit 0
@@ -28,6 +29,9 @@ while true; do
         --domainname)
             DOMAIN=$2
             shift 2;;
+        --emailusername)
+            EMAILUSERNAME=$2
+            shift 2;;
         --)
             shift
             break;;
@@ -36,6 +40,10 @@ done
 
 if [ -z $DOMAIN ]; then
     read -p "Please enter server domain name : " DOMAIN
+fi
+
+if [ -z $EMAILUSERNAME ]; then
+    read -p "Please enter main email address without domain : " EMAILUSERNAME
 fi
 
 echo "--- Configuring terminal ---"
@@ -52,7 +60,7 @@ apt-get upgrade -y
 apt-get dist-upgrade -y
 
 echo "--- Installing utilities... ---"
-apt-get install sudo curl wget git unzip tar ca-certificates gnupg lsb-release apt-transport-https software-properties-common -y
+apt-get install sudo curl wget git unzip tar net-tools ca-certificates gnupg lsb-release apt-transport-https software-properties-common -y
 
 echo "--- Installing firewall... ---"
 apt-get install ufw -y
@@ -139,11 +147,11 @@ a2enmod proxy proxy_http
 a2ensite webmail.$DOMAIN
 service apache2 restart
 if [ "$NOSSL" != true ]; then
-    certbot --email contact@$DOMAIN --agree-tos --no-eff-email -d webmail.$DOMAIN -w /var/www/html
+    certbot --email $EMAILUSERNAME@$DOMAIN --agree-tos --no-eff-email -d webmail.$DOMAIN -w /var/www/html
 fi
 echo "Waiting for mailserver starting..."
 sleep 10
-curl http://127.0.0.1:8000/admin/install/server -d "install%5Bhostname%5D=mail.$DOMAIN&install%5BsuperAdmin%5D=contact%40$DOMAIN&install%5BsuperAdminPassword%5D=$MAILPASS"
+curl http://127.0.0.1:8000/admin/install/server -d "install%5Bhostname%5D=mail.$DOMAIN&install%5BsuperAdmin%5D=$EMAILUSERNAME%40$DOMAIN&install%5BsuperAdminPassword%5D=$MAILPASS"
 
 echo "--- Installing PhpMyAdmin... ---"
 curl -s https://raw.githubusercontent.com/Raraph84/PhpMyAdmin-Installer/master/install_phpmyadmin.sh | bash -s $ROOTPASS
@@ -164,11 +172,11 @@ PTEROPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
 cp .env.example .env
 echo "yes" | composer install --no-dev --optimize-autoloader
 php artisan key:generate --force
-echo -e "contact@$DOMAIN\npanel.$DOMAIN\nEurope/Paris\n\n\n\n" | php artisan p:environment:setup
+echo -e "$EMAILUSERNAME@$DOMAIN\npanel.$DOMAIN\nEurope/Paris\n\n\n\n" | php artisan p:environment:setup
 echo -e "\n\n\n\n$PTERODBPASS\n" | php artisan p:environment:database
-echo -e "\nmail.$DOMAIN\n465\ncontact@$DOMAIN\n$MAILPASS\ncontact@$DOMAIN\n\nssl\n" | php artisan p:environment:mail
+echo -e "\nmail.$DOMAIN\n465\n$EMAILUSERNAME@$DOMAIN\n$MAILPASS\n$EMAILUSERNAME@$DOMAIN\n\nssl\n" | php artisan p:environment:mail
 php artisan migrate --seed --force
-echo -e "yes\ncontact@$DOMAIN\nAdmin\nAdmin\nAdmin\n$PTEROPASS\n" | php artisan p:user:make
+echo -e "yes\n$EMAILUSERNAME@$DOMAIN\nAdmin\nAdmin\nAdmin\n$PTEROPASS\n" | php artisan p:user:make
 chown -R www-data:www-data /var/www/pterodactyl/*
 (crontab -l; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | sort -u | crontab -
 PTEROQSERVICE="# Pterodactyl Queue Worker File\n# ----------------------------------\n\n[Unit]\nDescription=Pterodactyl Queue Worker\nAfter=redis-server.service\n\n[Service]\n# On some systems the user and group might be different.\n# Some systems use \`apache\` or \`nginx\` as the user and group.\nUser=www-data\nGroup=www-data\nRestart=always\nExecStart=/usr/bin/php /var/www/pterodactyl/artisan queue:work --queue=high,standard,low --sleep=3 --tries=3\nStartLimitInterval=180\nStartLimitBurst=30\nRestartSec=5s\n\n[Install]\nWantedBy=multi-user.target"
@@ -196,5 +204,5 @@ echo -e $WINGSSERVICE > /etc/systemd/system/wings.service
 echo "--- Installation finished ---"
 echo "Database root password is $ROOTPASS"
 echo "Database pterodactyl password is $PTERODBPASS"
-echo "Email is contact@$DOMAIN and password is $MAILPASS"
-echo "Pterodactyl admin is contact@$DOMAIN and password is $PTEROPASS"
+echo "Email is $EMAILUSERNAME@$DOMAIN and password is $MAILPASS"
+echo "Pterodactyl admin is $EMAILUSERNAME@$DOMAIN and password is $PTEROPASS"
