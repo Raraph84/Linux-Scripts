@@ -90,7 +90,7 @@ echo "--- Installing webserver... ---"
 wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
 apt-get update
-apt-get install apache2 php8.0 php-{cli,gd,mysql,mbstring,tokenizer,bcmath,xml,curl,zip} python3-certbot-apache -y
+apt-get install apache2 php php-{cli,gd,mysql,mbstring,tokenizer,bcmath,xml,curl,zip} python3-certbot-apache -y
 
 echo "--- Configuring webserver... ---"
 sed -i -e "s/ServerSignature On/ServerSignature Off/" /etc/apache2/conf-available/security.conf
