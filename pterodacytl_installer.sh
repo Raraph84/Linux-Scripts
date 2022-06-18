@@ -177,7 +177,9 @@ echo -e "$EMAILUSERNAME@$DOMAIN\npanel.$DOMAIN\nEurope/Paris\n\n\n\n" | php arti
 echo -e "\n\n\n\n$PTERODBPASS\n" | php artisan p:environment:database
 echo -e "\nmail.$DOMAIN\n465\n$EMAILUSERNAME@$DOMAIN\n$MAILPASS\n$EMAILUSERNAME@$DOMAIN\n\nssl\n" | php artisan p:environment:mail
 php artisan migrate --seed --force
+set +e # This command exit with an error but works perfectly
 echo -e "yes\n$EMAILUSERNAME@$DOMAIN\nAdmin\nAdmin\nAdmin\n$PTEROPASS\n" | php artisan p:user:make
+set -e
 chown -R www-data:www-data /var/www/pterodactyl/*
 (crontab -l; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | sort -u | crontab -
 PTEROQSERVICE="# Pterodactyl Queue Worker File\n# ----------------------------------\n\n[Unit]\nDescription=Pterodactyl Queue Worker\nAfter=redis-server.service\n\n[Service]\n# On some systems the user and group might be different.\n# Some systems use \`apache\` or \`nginx\` as the user and group.\nUser=www-data\nGroup=www-data\nRestart=always\nExecStart=/usr/bin/php /var/www/pterodactyl/artisan queue:work --queue=high,standard,low --sleep=3 --tries=3\nStartLimitInterval=180\nStartLimitBurst=30\nRestartSec=5s\n\n[Install]\nWantedBy=multi-user.target"
