@@ -142,7 +142,7 @@ docker run -td \
     --publish 995:995 \
     --publish 4190:4190 \
     analogic/poste.io
-WEBMAILVHOST="<VirtualHost *:80>\n\n    ServerName webmail.$DOMAIN\n\n    Alias /.well-known /var/www/html/.well-known\n\n    ProxyPass /.well-known "'!'"\n    ProxyPass / http://127.0.0.1:8000/\n\n</VirtualHost>"
+WEBMAILVHOST="<VirtualHost *:80>\n\n    ServerName webmail.$DOMAIN\n\n    Alias /.well-known /var/www/html/.well-known\n\n    ProxyPass /.well-known "'!'"\n    ProxyPass / http://127.0.0.1:8000/\n    ProxyPassReverse / http://127.0.0.1:8000/\n\n</VirtualHost>"
 echo -e $WEBMAILVHOST > /etc/apache2/sites-available/webmail.$DOMAIN.conf
 a2enmod proxy proxy_http
 a2ensite webmail.$DOMAIN
