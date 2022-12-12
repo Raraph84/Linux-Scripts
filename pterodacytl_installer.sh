@@ -173,7 +173,7 @@ PTEROPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
 cp .env.example .env
 echo "yes" | composer install --no-dev --optimize-autoloader
 php artisan key:generate --force
-echo -e "$EMAILUSERNAME@$DOMAIN\npanel.$DOMAIN\nEurope/Paris\n\n\n\n" | php artisan p:environment:setup
+echo -e "$EMAILUSERNAME@$DOMAIN\nhttps://ptero.$DOMAIN\nEurope/Paris\n\n\n\n\nno\n" | php artisan p:environment:setup
 echo -e "\n\n\n\n$PTERODBPASS\n" | php artisan p:environment:database
 echo -e "\nmail.$DOMAIN\n465\n$EMAILUSERNAME@$DOMAIN\n$MAILPASS\n$EMAILUSERNAME@$DOMAIN\n\nssl\n" | php artisan p:environment:mail
 php artisan migrate --seed --force
