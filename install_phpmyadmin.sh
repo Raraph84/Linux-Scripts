@@ -22,10 +22,10 @@ echo "--- Installing additionnal packages... ---"
 apt-get -qq install libapache2-mod-php php-mysql php-mbstring unzip -y
 
 echo "--- Downloading PhpMyAdmin... ---"
-wget -q https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
-unzip -q phpMyAdmin-5.2.0-all-languages.zip -d /opt
-mv /opt/phpMyAdmin-5.2.0-all-languages /opt/phpmyadmin
-rm phpMyAdmin-5.2.0-all-languages.zip
+wget -q https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
+unzip -q phpMyAdmin-5.2.1-all-languages.zip -d /opt
+mv /opt/phpMyAdmin-5.2.1-all-languages /opt/phpmyadmin
+rm phpMyAdmin-5.2.1-all-languages.zip
 chown -R www-data:www-data /opt/phpmyadmin
 
 echo "--- Configuring PhpMyAdmin... ---"
